@@ -54,7 +54,7 @@ export default {
           to: "/inspire",
         },
       ],
-      title: "My Routine",
+      title: "My App",
     }
   },
   methods: {
@@ -62,9 +62,6 @@ export default {
       await this.$store.dispatch('auth/signOut')
     },
   },
-  created () {
-    
-  }
 };
 </script>
 

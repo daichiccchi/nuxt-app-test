@@ -14,16 +14,21 @@ export const mutations = {
 
 export const actions = {
   // ログイン処理
-  async signIn ({ commit }, { email, password }) {
+  async signIn ({ dispatch, commit }, { email, password }) {
     try {
       const { data: { user }, error } = await this.$supabase.auth.signInWithPassword({
         email,
         password
       })
       // ログインに成功したら、トップページに遷移する
-      console.log(user)
       if (user) {
         commit('setIsLoggined', true)
+        dispatch('flashMessage/showMessage', {
+          message: 'ログインしました',
+          type: 'success',
+          status: true
+        }, { root: true })
+        
         this.$router.push('/')
       }
       if (error) {

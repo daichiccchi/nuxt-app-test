@@ -1,5 +1,6 @@
 <template>
-  <v-app dark>
+  <v-app>
+    <FlashMessage />
     <Header :user="$store.state.auth.user"/>
     <v-main>
       <v-container>
@@ -18,6 +19,6 @@
 
 <script>
 export default {
-  name: "DefaultLayout",
+    name: "DefaultLayout"
 };
 </script>

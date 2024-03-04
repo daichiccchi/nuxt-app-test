@@ -1,8 +1,6 @@
 <template>
  <div>
-  index<br>
-  <NuxtLink to="/auth/register">ユーザー新規登録</NuxtLink>
-  <NuxtLink to="/auth/signin">ログイン</NuxtLink>
+  トップページ<br>
  </div>
 
 </template>

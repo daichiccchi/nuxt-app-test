@@ -1,10 +1,11 @@
 <template>
   <div>
     <h2>ログイン画面</h2>
-    <v-text-field v-model="email">メールアドレス</v-text-field>
-    <v-text-field v-model="password">パスワード</v-text-field>
+    <v-text-field v-model="email" label="メールアドレス (*)"></v-text-field>
+    <v-text-field v-model="password" label="パスワード (*)"></v-text-field>
     <v-row>
       <v-btn
+        color="primary"
         @click="signIn">ログインする</v-btn>
     </v-row>
     <v-row>
