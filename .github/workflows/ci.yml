@@ -1,45 +1,27 @@
-name: ci
+name: Build and Deploy to S3
 
 on:
   push:
     branches:
       - main
-      - master
-  pull_request:
-    branches:
-      - main
-      - master
 
 jobs:
-  ci:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node: [lts/*]
-
+  build-and-deploy:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎
-        uses: actions/checkout@master
+      - name: Checkout
+        uses: actions/checkout@main  # リポジトリをチェックアウト  
 
-      - name: Setup node env 🏗
-        uses: actions/setup-node@v3.0.0
-        with:
-          node-version: ${{ matrix.node }}
-          check-latest: true
+      - name: Install Dependencies
+        run: npm install
 
-      - name: Cache node_modules 📦
-        uses: actions/cache@v2.1.7
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      - name: Build
+        run: npm run build  # Nuxtビルド
 
-      - name: Install dependencies 👨🏻‍💻
-        run: npm ci --prefer-offline --no-audit
-
-      - name: Run linter 👀
-        run: npm run lint
-
+      - name: Deploy  # S3にデプロイ 
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: # S3のbucket-for-deploying-react-projectバケットにデプロイ
+          aws s3 cp --recursive --region ap-northeast-1 ./dist s3://bucket-for-deploying-react-project
+      
