@@ -18,7 +18,7 @@
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title>YOKU</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -54,7 +54,7 @@ export default {
           to: "/inspire",
         },
       ],
-      title: "My App",
+      title: "YOKU",
     }
   },
   methods: {

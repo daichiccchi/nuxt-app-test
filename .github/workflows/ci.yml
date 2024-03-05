@@ -1,6 +1,7 @@
 name: Build and Deploy to S3
 
 on:
+  # mainブランチへのプッシュをトリガーにする
   push:
     branches:
       - main
@@ -14,15 +15,16 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-
+      # ビルドしてdistディレクトリ以下のファイルを更新
       - name: Build
-        run: npm run build  # Nuxtビルド
+        run: npm run build 
 
       - name: Deploy  # S3にデプロイ 
         env:
+          # IAMユーザーに作成したアクセスキー
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: | # S3のbucket-for-deploying-react-projectバケットにデプロイ
+        run: | # S3のバケットにデプロイ
           aws s3 sync --region ap-northeast-1 ./dist s3://nuxt-app-20240218 --delete
           aws s3 cp --recursive --region ap-northeast-1 ./dist s3://nuxt-app-20240218
       
